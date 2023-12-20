@@ -16,6 +16,7 @@ setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
 
+// we need to check the rate linit in the numberrequest object--
 app.use(function(){
   
 })
