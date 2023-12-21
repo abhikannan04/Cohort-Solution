@@ -16,9 +16,20 @@ setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
 
-// we need to check the rate linit in the numberrequest object--
-app.use(function(){
-  
+// we need to check the rate limit in the numberrequest object--
+app.use(function(req,res,next){
+  const userId = req.headers["user-id"];
+  if(numberOfRequestsForUser[userId]){
+    numberOfRequestsForUser[userId] = numberOfRequestsForUser[userId]+1;
+    if(numberOfRequestsForUser[userId]>5){
+      res.status(404).send("NO ENTRY");
+    }else{
+      next();
+    }
+  }else{
+    numberOfRequestsForUser[userId] = 1;
+    next();
+  }
 })
 
 app.get('/user', function(req, res) {
