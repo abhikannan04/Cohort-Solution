@@ -13,6 +13,8 @@ function userMiddleware(req, res, next) {
 
         const decodedToken  = jwt.verify(jwtToken,JWT_SECRETKEY);
         if(decodedToken.username){
+            // middlewares can be used to pass the values as well as to stop the request and pass the req to next middleware
+            req.username = decodedToken.username;
             next();
         }else{
             res.status(403).json({msg:"Invalid Authentication"});
